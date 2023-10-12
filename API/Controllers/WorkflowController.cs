@@ -16,13 +16,14 @@ public class WorkflowController : ApiControllerBase
     }
 
     [HttpPost]
-    public async Task<ActionResult<bool>> CreateWorkflow(CreateWorkflowCommand command)
-        => HandleResult(await _workflowService.CreateWorkflowAsync(command));
+    public async Task<ActionResult<bool>> CreateAsync(CreateWorkflowCommand command)
+        => HandleResult(await _workflowService.CreateAsync(command));
 
     [HttpGet("/{id}")]
-    public async Task<ActionResult<WorkflowDto>> GetWorkflowById([FromRoute] int id)
-    {
-        return HandleResult(await _workflowService.GetByIdAsync(id));
-    }
+    public async Task<ActionResult<WorkflowDto>> GetById([FromRoute] int id) 
+        => HandleResult(await _workflowService.GetByIdAsync(id));
 
+    [HttpGet]
+    public async Task<ActionResult<List<WorkflowDto>>> GetAll()
+        => HandleResult(await _workflowService.GetAllAsync());
 }

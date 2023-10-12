@@ -28,7 +28,7 @@ public class WorkflowService : IWorkflowService
             : Result<WorkflowDto>.Success(workflow.ToDto());
     }
 
-    public async Task<Result<bool>> CreateWorkflowAsync(CreateWorkflowCommand command)
+    public async Task<Result<bool>> CreateAsync(CreateWorkflowCommand command)
     {
         // validate createcommand here. 
         // if success, continue.
@@ -39,4 +39,9 @@ public class WorkflowService : IWorkflowService
 
         return Result<bool>.Success(result);
     }
+
+    public async Task<Result<List<WorkflowDto>>> GetAllAsync()
+        => Result<List<WorkflowDto>>.Success(
+            (await _workflowRepository.GetAllAsync())
+            .Select(x => x.ToDto()).ToList());
 }

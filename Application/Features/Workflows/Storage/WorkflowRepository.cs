@@ -1,4 +1,5 @@
-﻿using Application.Persistence;
+﻿using Application.Features.Workflow.DTOs;
+using Application.Persistence;
 using Microsoft.EntityFrameworkCore;
 
 namespace Application.Features.Workflows.Storage;
@@ -24,7 +25,6 @@ public class WorkflowRepository : IWorkflowRepository
     public async Task<Workflow?> GetByIdAsync(int id) 
         => await _context.Workflows.FirstOrDefaultAsync(x => x.Id == id);
 
-       
-    
- 
+    public async Task<List<Workflow>> GetAllAsync()
+        => await _context.Workflows.ToListAsync();
 }

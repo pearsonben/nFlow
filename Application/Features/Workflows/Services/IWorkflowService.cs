@@ -7,5 +7,6 @@ namespace Application.Features.Workflows.Services;
 public interface IWorkflowService
 {
     Task<Result<WorkflowDto>> GetByIdAsync(int id);
-    Task<Result<bool>> CreateWorkflowAsync(CreateWorkflowCommand command);
+    Task<Result<bool>> CreateAsync(CreateWorkflowCommand command);
+    Task<Result<List<WorkflowDto>>> GetAllAsync();
 }
