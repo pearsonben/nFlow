@@ -11,4 +11,10 @@ public class AppDbContext : DbContext
     }
     
     public DbSet<Workflow> Workflows { get; set; }
+
+    protected override void OnModelCreating(ModelBuilder builder)
+    {
+        builder.Entity<Workflow>()
+            .HasKey(x => x.Id);
+    }
 }
