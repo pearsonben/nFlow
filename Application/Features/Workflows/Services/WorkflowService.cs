@@ -3,24 +3,24 @@ using Application.Features.Workflow.DTOs;
 using Application.Features.Workflows.Map;
 using Application.Features.Workflows.Requests;
 using Application.Features.Workflows.Storage;
+using Application.Persistence.Storage;
 
 namespace Application.Features.Workflows.Services;
 
-using Entities;
 public class WorkflowService : IWorkflowService
 {
-    private readonly IWorkflowRepository _workflowRepository;
+    private readonly IUnitOfWork _unitOfWork;
 
-    public WorkflowService(IWorkflowRepository workflowRepository)
+    public WorkflowService(IUnitOfWork unitOfWork)
     {
-        _workflowRepository = workflowRepository;
+        _unitOfWork = unitOfWork;
     }
     
     public async Task<Result<WorkflowDto>> GetByIdAsync(int id)
     {
         // validate that ID is > 0 
         
-        var workflow = await _workflowRepository.GetByIdAsync(id);
+        var workflow = await _unitOfWork.WorkflowRepository.GetByIdAsync(id);
 
         // Validate.
         return workflow is null 
@@ -33,7 +33,8 @@ public class WorkflowService : IWorkflowService
         // validate createcommand here. 
         // if success, continue.
 
-        var result = await _workflowRepository.CreateAsync(command.ToWorkflow());
+        _unitOfWork.WorkflowRepository.Create(command.ToWorkflow());
+        var result = await _unitOfWork.SaveChangesAsync();
         
         if(result is false) return Result<bool>.Failure("Failed to create workflow.");
 
@@ -42,6 +43,6 @@ public class WorkflowService : IWorkflowService
 
     public async Task<Result<List<WorkflowDto>>> GetAllAsync()
         => Result<List<WorkflowDto>>.Success(
-            (await _workflowRepository.GetAllAsync())
+            (await  _unitOfWork.WorkflowRepository.GetAllAsync())
             .Select(x => x.ToDto()).ToList());
 }

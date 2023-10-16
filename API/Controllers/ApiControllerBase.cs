@@ -9,7 +9,7 @@ namespace API.Controllers;
 [Route("api/[controller]")]
 public abstract class ApiControllerBase : ControllerBase
 {
-
+    
     /// <summary>
     /// Map the Result Type to appropriate status code.
     /// </summary>
@@ -17,11 +17,12 @@ public abstract class ApiControllerBase : ControllerBase
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>
     public ActionResult<T> HandleResult<T>(Result<T> result)
-        => result.IsSuccess switch
+        => result switch
         {
-            true when result.Data is null => NotFound(),
-            true => Ok(result.Data),
-            false => BadRequest(result.ErrorMessage)
+            { IsSuccess:true, Data: null } => NotFound(),
+            { IsSuccess:true } => Ok(result.Data),
+            { IsSuccess:false } => BadRequest(result.ErrorMessage)
         };
+    
 
 }

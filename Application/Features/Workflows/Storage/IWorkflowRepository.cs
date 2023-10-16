@@ -1,10 +1,9 @@
-﻿namespace Application.Features.Workflows.Storage;
+﻿using Application.Persistence.Storage;
+
+namespace Application.Features.Workflows.Storage;
 
 using Entities;
 
-public interface IWorkflowRepository
+public interface IWorkflowRepository : IRepository<Workflow>
 {
-    Task<bool> CreateAsync(Workflow workflow);
-    Task<Workflow?> GetByIdAsync(int id);
-    Task<List<Workflow>> GetAllAsync();
 }

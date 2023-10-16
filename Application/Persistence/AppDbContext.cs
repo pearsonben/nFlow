@@ -11,10 +11,14 @@ public class AppDbContext : DbContext
     }
     
     public DbSet<Workflow> Workflows { get; set; }
+    public DbSet<CustomProcess> Processes { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
         builder.Entity<Workflow>()
-            .HasKey(x => x.Id);
+            .HasMany(x => x.Processes)
+            .WithOne(x => x.Workflow)
+            .HasForeignKey(x => x.WorkflowId);
+        
     }
 }

@@ -1,30 +1,13 @@
 ﻿using Application.Features.Workflow.DTOs;
 using Application.Persistence;
+using Application.Persistence.Storage;
 using Microsoft.EntityFrameworkCore;
 
 namespace Application.Features.Workflows.Storage;
 
 using Entities;
 
-public class WorkflowRepository : IWorkflowRepository
+public class WorkflowRepository : Repository<Workflow>, IWorkflowRepository
 {
-    private readonly AppDbContext _context;
-
-    public WorkflowRepository(AppDbContext context)
-    {
-        _context = context;
-    }
-    
-    public async Task<bool> CreateAsync(Workflow workflow)
-    {
-        _context.Workflows.Add(workflow);
-
-        return await _context.SaveChangesAsync() > 0;
-    }
-
-    public async Task<Workflow?> GetByIdAsync(int id) 
-        => await _context.Workflows.FirstOrDefaultAsync(x => x.Id == id);
-
-    public async Task<List<Workflow>> GetAllAsync()
-        => await _context.Workflows.ToListAsync();
+    public WorkflowRepository(AppDbContext context) : base(context){}
 }
