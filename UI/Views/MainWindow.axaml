@@ -6,20 +6,46 @@
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="UI.Views.MainWindow"
         x:DataType="vm:MainWindowViewModel"
-        Width="400"
-        Height="650  "
+        Width="1042"
+        Height="850"
         Icon="/Assets/avalonia-logo.ico"
         Title="UI">
 
+    
+    
     <Design.DataContext>
         <!-- This only sets the DataContext for the previewer in an IDE,
              to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
         <vm:MainWindowViewModel/>
     </Design.DataContext>
     
-    
-    
-
-    <TextBlock Text="{Binding Greeting}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+    <Grid ColumnDefinitions="*, 3*">
+        
+        <!-- <Border Grid.ColumnSpan="2" ZIndex="100" Opacity="0.1" BorderBrush="Yellow" BorderThickness="20" Background="red"></Border> -->
+        
+        <!-- Left Menu Grid -->
+        <Grid Grid.Column="0" RowDefinitions="2*, 13*, 1*">
+            
+            <!-- Title Grid -->
+            <Grid Background="DimGray">
+                <!--
+                <Label FontWeight="Bold" VerticalAlignment="Center" Grid.Row="0"  Content="{Binding Title}"></Label>
+                -->
+                <Button Content="Test Button" />
+            </Grid>
+            
+            <!-- Workflows List Grid -->
+            <Border Grid.Row="1" Background="SlateGray"></Border>
+            
+            <!-- Workflow Options Grid -->
+            <Grid Grid.Row="2" Background="DimGray" />
+        </Grid>
+        
+        <!-- Main Content Grid -->
+        <Grid Grid.Column="1" RowDefinitions="1*, 7*">
+            <Border Grid.Row="0" Background="DimGray"></Border>
+            <Border Grid.Row="1" Background="red"></Border>
+        </Grid>
+    </Grid>
 
 </Window>

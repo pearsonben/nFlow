@@ -6,5 +6,5 @@ public partial class MainWindowViewModel : ViewModelBase
 {
     
     [ObservableProperty]
-    public string greeting = "Welcome to Avalonia!";
+    public string title = "Workflows";
 }
